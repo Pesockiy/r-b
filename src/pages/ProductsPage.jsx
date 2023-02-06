@@ -1,28 +1,43 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
-import Users from "../components/Containers/Products/Products";
+import { Button, Row, Col, Spinner } from "react-bootstrap";
+
+import Products from "../components/Containers/Products/Products";
+
 import useFetch from "../hooks";
 
 const perToShow = 5;
 
-const Products = () => {
+const ProductsPage = () => {
   const [currentItems, setCurrentItems] = useState(perToShow);
   const [products, isLoading] = useFetch(
     `https://dummyjson.com/products?limit=${currentItems}`
   );
 
   const showMoreHandler = () => {
-    setCurrentItems(0 + perToShow);
+    setCurrentItems(currentItems + perToShow);
   };
+  
+  console.log(currentItems);
+  if (isLoading) return <Spinner style={{position: "fixed", inset: "50%"}}/>;
 
   return (
-    <Users
-      products={products.products}
-      showMoreHandler={showMoreHandler}
-      isLoading={isLoading}
-      count={perToShow}
-    />
+    <>
+      <Products
+        products={products.products}
+        showMoreHandler={showMoreHandler}
+        isLoading={isLoading}
+        count={perToShow}
+      />
+      <Row className="py-2">
+        <Col>
+          <Button className="mx-auto d-block" onClick={showMoreHandler}>
+            показать еще {perToShow}
+          </Button>
+        </Col>
+      </Row>
+    </>
   );
 };
 
-export default Products;
+export default ProductsPage;
