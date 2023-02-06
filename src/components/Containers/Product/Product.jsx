@@ -15,6 +15,7 @@ import {
 const Product = () => {
   const [product, setProduct] = useState();
   const [index, setIndex] = useState(0);
+  const [val, setVal] = useState("");
   let { id } = useParams();
 
   const [show, setShow] = useState(false);
@@ -24,6 +25,16 @@ const Product = () => {
 
   const handleSelect = (selectedIndex, e) => {
     setIndex(selectedIndex);
+  };
+
+  const s = (e) => {
+    setVal(e.target.value);
+    console.log(val);
+  };
+
+  const handleSubmit = () => {
+    setProduct({ ...product, title: val });
+    handleClose();
   };
 
   useEffect(() => {
@@ -45,52 +56,39 @@ const Product = () => {
       <Button variant="info" onClick={goBackHandler}>
         назат
       </Button>
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>редачение инфі</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form>
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label>Email address</Form.Label>
-              <Form.Control type="text" placeholder={"item.title"} />
-              <Form.Text className="text-muted">
-                We'll never share your email with anyone else.
-              </Form.Text>
-            </Form.Group>
-            {/* <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label>Email address</Form.Label>
-              <Form.Control type="email" placeholder="Enter email" />
-              <Form.Text className="text-muted">
-                We'll never share your email with anyone else.
-              </Form.Text>
-            </Form.Group>
-
-            <Form.Group className="mb-3" controlId="formBasicPassword">
-              <Form.Label>Password</Form.Label>
-              <Form.Control type="password" placeholder="Password" />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicCheckbox">
-              <Form.Check type="checkbox" label="Check me out" />
-            </Form.Group> */}
-            <Button variant="primary" type="submit">
-              Submit
+      {product && (
+        <Modal show={show} onHide={handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>редачение инфі</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Form>
+              <Form.Group className="mb-3" controlId="formBasicEmail">
+                <Form.Label>введи заголовок</Form.Label>
+                <Form.Control
+                  onChange={s}
+                  value={val}
+                  type="text"
+                  placeholder={product.title}
+                />
+                <Form.Text className="text-muted"></Form.Text>
+              </Form.Group>
+            </Form>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleClose}>
+              не да а нет
             </Button>
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleClose}>
-            Save Changes
-          </Button>
-        </Modal.Footer>
-      </Modal>
+            <Button variant="primary" onClick={handleSubmit}>
+              да
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      )}
 
       {product ? (
         <Row className="py-2 gy-2 align-items-stretch">
-          <Col key={product.id} className="">
+          <Col key={product.id} ls={4} md={8} lg={6}>
             <Card
               bg="transparent"
               style={{ borderRadius: "20px", overflow: "hidden" }}

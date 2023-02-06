@@ -25,6 +25,8 @@ code {
 }
 .card-img-top {
   height: 50%;
+}
+img {
   object-fit: cover;
   object-position: center;
 }
