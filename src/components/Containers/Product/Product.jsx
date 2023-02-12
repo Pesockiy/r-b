@@ -51,6 +51,8 @@ const Product = () => {
     navigate(-1);
   };
 
+  console.log(navigate);
+
   return (
     <>
       <Button variant="info" onClick={goBackHandler}>
@@ -80,7 +82,7 @@ const Product = () => {
               не да а нет
             </Button>
             <Button variant="primary" onClick={handleSubmit}>
-              да
+              не нет а да
             </Button>
           </Modal.Footer>
         </Modal>
@@ -95,7 +97,7 @@ const Product = () => {
             >
               <Carousel activeIndex={index} onSelect={handleSelect}>
                 {product?.images.map((image) => (
-                  <Carousel.Item>
+                  <Carousel.Item key={image}>
                     <img
                       className="d-block w-100"
                       src={image}

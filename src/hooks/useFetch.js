@@ -1,20 +1,13 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 
-const useFetch = (url, options = {}) => {
+const useFetch = (url) => {
     const [data, setData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [errorText, setErrorText] = useState('');
-    // const [abort, setAbort] = useState(() => { });
 
-    useEffect(() => {
-        const fetchData = async () => {
+    const f = useCallback(async () => {
             try {
-                const abortController = new AbortController();
-                const signal = abortController.signal;
-                // setAbort(abortController.abort);
-                console.log(signal)
-
-                const res = await fetch(url, { ...options, signal });
+                const res = await fetch(url);
                 const data = await res.json();
                 setData(data);
             } catch (e) {
@@ -22,15 +15,11 @@ const useFetch = (url, options = {}) => {
             } finally {
                 setIsLoading(false);
             }
-        };
-        fetchData();
-        // return () => {
-            // abort();
-        // }
 
-    }, [url])
 
-    return [data, isLoading, errorText]
+    }, [])
+
+    return [data,f, isLoading, errorText]
 }
 
 export default useFetch;

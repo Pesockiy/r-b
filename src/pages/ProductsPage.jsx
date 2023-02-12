@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 import { Button, Row, Col, Spinner } from "react-bootstrap";
 
@@ -10,23 +10,34 @@ const perToShow = 5;
 
 const ProductsPage = () => {
   const [currentItems, setCurrentItems] = useState(perToShow);
-  const [products, isLoading] = useFetch(
-    `https://dummyjson.com/products?limit=${currentItems}`
-  );
+  const [products, setProducts] = useState([]);
+  // const [products, f, isLoading] = useFetch(
+  //   `https://dummyjson.com/products?limit=${currentItems}`
+  // );
 
+  const f = useCallback(async (url) => {
+    const r = await fetch(`https://dummyjson.com/products?limit=${url}`);
+    const y = await r.json();
+    console.log(1)
+    setProducts(y);
+  }, [currentItems]
+  )
+
+  useEffect(() => {
+    f(5);
+  }, []);
   const showMoreHandler = () => {
     setCurrentItems(currentItems + perToShow);
   };
-  
-  console.log(currentItems);
-  if (isLoading) return <Spinner style={{position: "fixed", inset: "50%"}}/>;
+
+  // if (isLoading) return <Spinner style={{ position: "fixed", inset: "50%" }} />;
 
   return (
     <>
       <Products
         products={products.products}
         showMoreHandler={showMoreHandler}
-        isLoading={isLoading}
+        // isLoading={isLoading}
         count={perToShow}
       />
       <Row className="py-2">
