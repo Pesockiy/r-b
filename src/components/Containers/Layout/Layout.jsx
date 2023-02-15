@@ -11,7 +11,8 @@ const Layout = () => {
       fluid
     >
       <Container>
-        <Nav />
+        {/* <Nav /> */}
+        <div style={{ height: 50}}></div>
 
         <Outlet />
       </Container>

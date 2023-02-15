@@ -33,3 +33,56 @@ img {
 .b .card:hover {
   transform: scale(1.1);
 }
+
+section {
+  /* height: 50vh; */
+  padding: 40px 20px;
+  background-color: orange;
+}
+html {
+  scroll-behavior: smooth;
+}
+.fixed {
+  position: fixed;
+  top: 0;
+  right: 0;
+}
+.active {
+  background-color: red;
+}
+/* button:focus {
+  border: 10px solid #000;
+} */
+.tool {
+  opacity: 0;
+  z-index: 2;
+  top: 0;
+  color: #fff;
+  position: absolute;
+  left: 50%;
+  width: 140px;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: rgba(0,0,0,.74);
+  transform: translate(-50%, calc(-100% - 10px));
+  animation: op .3s ease-in-out both;
+}
+@keyframes op {
+  to {
+    opacity: 1;
+  }
+}
+.por {
+  z-index: 1;
+  position: relative;
+  display: inline-block;
+}
+.btm {
+  top: auto;
+  bottom: 0;
+  height: max-content;
+  transform: translate(-50%, calc(100% + 10px));
+}
+.e {
+  background-color: green!important;
+}

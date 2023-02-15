@@ -20,9 +20,9 @@ const App = () => {
   }, []);
   return (
     <>
-      <AppRouter />
+      {/* <AppRouter /> */}
       {/* <P /> */}
-      {/* <Todos /> */}
+      <Todos />
     {/* <h1>{data.title}</h1> */}
     </>
   );

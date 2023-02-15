@@ -10,28 +10,24 @@ const StyledButton = styled(Btn)`
   justify-content: center;
 
   font: 600 24px/1.2 serif;
-  color: red;
-  background-color: orange;
+  /* color: red;
+  background-color: orange; */
 `;
 
-const Button = forwardRef(({ children, handleButtonClick, variant }, ref) => {
+const Button = forwardRef(({ children, onClick, variant }, ref) => {
+  console.log("button          ререндер!");
+
   return (
     <>
       <StyledButton
         className={styles.button}
-        ref={ref}
-        onClick={handleButtonClick}
+        onClick={onClick}
         className="button"
         variant={variant}
+        ref={ref}
       >
         {children}
       </StyledButton>
-      <h1>
-        ccx
-        <Badge size="lg" bg="secondary">
-          dsd
-        </Badge>
-      </h1>
     </>
   );
 });

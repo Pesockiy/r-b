@@ -1,115 +1,68 @@
-import { useEffect, useState } from "react";
-import useFetch from "../hooks";
+import {
+  useEffect,
+  useLayoutEffect,
+  useState,
+  useRef,
+  useMemo,
+  useCallback,
+  memo,
+} from "react";
+
+import PropTypes from "prop-types";
+
 import {
   Container,
   Row,
   Col,
   Badge,
   Spinner,
-  Button,
   Card,
   Form,
 } from "react-bootstrap";
 
-import { categoriesPath } from "../utilits/contsts";
-
-export const CardBlock = ({
-  title,
-  body,
-  id,
-  completed,
-  handleDelete,
-  handleEdit,
-}) => {
-  const [showEditButton, setShowEditButton] = useState(false);
-
-  return (
-    <Card className="my-3 text-dark" key={id}>
-      <Card.Header
-        className="d-flex justify-content-between"
-        onMouseEnter={() => setShowEditButton(true)}
-        onMouseLeave={() => setShowEditButton(false)}
-      >
-        {title} {showEditButton && <span onClick={handleEdit}>edit info</span>}
-      </Card.Header>
-      <Card.Body>{body}</Card.Body>
-      <Button variant="danger" onClick={handleDelete}>
-        DELETE
-      </Button>
-    </Card>
-  );
-};
+import Tooltip from "./Tooltip";
+import Button from "../components/Button/Button";
+import WithMemo from "../components/Button/WithMemo";
 
 const Main = () => {
-  // const [categories, isLoading] = useFetch(categoriesPath);
-  const [val, setVal] = useState("");
-  const [todos, setTodos] = useState([
-    {
-      title: "поесть",
-      body: "dssfdfd",
-      id: 0,
-      completed: false,
-    },
-    {
-      title: "поспать",
-      body: "dssfdfd1",
-      id: 1,
-      completed: false,
-    },
-  ]);
+  const [number, setNumber] = useState(0);
 
-  const handleDelete = (id) => {
-    setTodos(todos.filter((item) => id !== item.id));
-  };
-
-  const handleEdit = (id) => {
-    setTodos(
-      todos.map((todo) => {
-        if (todo.id === id) {
-          if (val.trim().length < 1) return { ...todo, title: todo.title };
-          else return { ...todo, title: val };
-        } else return todo;
-      })
-    );
-    console.log(todos, val);
-  };
+  const clickHandler = useCallback(() => setNumber(number + 1), [number]);
+  const clickHandler2 = useCallback(
+    () => console.log("тот самий лишний ререндер"),
+    []
+  );
 
   return (
     <>
-      {/* {isLoading ? (
-        <Spinner style={{ position: "fixed", inset: "50%" }} />
-      ) : (
-        <Container className="bg-info p-4 my-3 rounded-1">
-          <Row>
-            <Col>Categories: </Col>
-          </Row>
-          <Row style={{ maxWidth: "700px" }}>
-            {categories?.map((cat) => (
-              <Col key={cat} lg="2">
-                <Badge className="mt-2 mr-2">{cat}</Badge>
-              </Col>
-            ))}
-          </Row>
-        </Container>
-      )} */}
       <Container>
         <Row>
-          {todos?.map((todo) => (
-            <Col key={todo.id} lg={4}>
-              <CardBlock
-                {...todo}
-                handleDelete={() => handleDelete(todo.id)}
-                handleEdit={() => handleEdit(todo.id)}
-              />
-            </Col>
-          ))}
+          <Col>
+            <Tooltip
+              buttonText="тултип 1"
+              tooltipText={"єто подсказка очень длиннная"}
+            />
+          </Col>
+          <Col>
+            <Tooltip
+              buttonText="тултип 2"
+              tooltipText={"єто мальенькая "}
+              visible={true}
+            />
+          </Col>
+        </Row>
+        <Row className="py-4">
+          <Col>
+            {/* <WithMemo onClick={clickHandler2} variant="secondary">не должна ререндериться</WithMemo> */}
+            <Button onClick={clickHandler2} variant="secondary">
+              не должна ререндериться
+            </Button>
+          </Col>
         </Row>
         <Row>
-          <Col lg={4}>
-            <Form>
-              <Form.Control onChange={(e) => setVal(e.target.value)} />
-            </Form>
-            <Button className="mt-3">ebash</Button>
+          <Col>
+            <Button onClick={clickHandler}>кнопка,которая все портит</Button>
+            {number}
           </Col>
         </Row>
       </Container>
