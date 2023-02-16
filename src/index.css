@@ -110,6 +110,9 @@ html {
 .fd {
   display: inline-flex;
 }
+b {
+  font-family: serif;
+}
 h1 {
   font-size: 10vw;
   font-family: fantasy;
