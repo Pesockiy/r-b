@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Button as Btn, Badge } from "react-bootstrap";
 
 import styles from "./Button.module.sass";
+import B from "./B";
 
 const StyledButton = styled(Btn)`
   display: flex;
@@ -14,22 +15,8 @@ const StyledButton = styled(Btn)`
   background-color: orange; */
 `;
 
-const Button = forwardRef(({ children, onClick, variant }, ref) => {
-  console.log("button          ререндер!");
-
-  return (
-    <>
-      <StyledButton
-        className={styles.button}
-        onClick={onClick}
-        className="button"
-        variant={variant}
-        ref={ref}
-      >
-        {children}
-      </StyledButton>
-    </>
-  );
-});
+const Button = forwardRef(({ children, onClick, variant }, ref) => (
+  <B onClick={onClick} children={children} ref={ref} />
+));
 
 export default Button;

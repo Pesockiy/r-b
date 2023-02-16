@@ -1,6 +1,5 @@
 import Main from "./pages/Main";
-import ProductsPage from "./pages/ProductsPage";
-import User from "./pages/User";
+import Products from "./components/Containers/Products/Products";
 import Product from "./components/Containers/Product/Product";
 
 import { MAIN_ROUTE, PRODUCTS_ROUTE, PRODUCT_ROUTE, USER_ROUTE } from "./utilits/contsts";
@@ -13,14 +12,14 @@ export const pageRoutes = [
     },
     {
         path: PRODUCTS_ROUTE,
-        element: <ProductsPage />,
+        element: <Products />,
     },
     {
         path: PRODUCT_ROUTE,
         element: <Product />
     },
-    {
-        path: USER_ROUTE,
-        element: <User />
-    },
+    // {
+    //     path: USER_ROUTE,
+    //     element: <User />
+    // },
 ]

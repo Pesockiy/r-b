@@ -1,13 +1,40 @@
 import { Row, Col, Card, Spinner, Button, Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import React, {
+  useState,
+  useEffect,
+  useCallback,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  createRef,
+  useTransition,
+  createContext,
+} from "react";
+import { gsap } from "gsap";
 
-const Products = ({ products }) => {
+import { api, categoriesPath } from "../../../utilits/contsts";
+
+const Products = () => {
+  const [products, setProducts] = useState([]);
+  const [loader, setLoader] = useState(true);
+
+  useEffect(() => {
+    fetch("https://dummyjson.com/products")
+      .then((res) => res.json())
+      .then((data) => setProducts(data.products))
+      .finally(() => setLoader(false));
+  }, []);
+
+  if (loader)
+    return <Spinner style={{ position: "fixed", top: "50%", left: "50%" }} />;
+
   return (
     <>
-      <Container className="b bg-warning my-3 rounded-1">
+      <Container className="bg-warning my-3 rounded-1">
         <Row className="py-2 gy-2 align-items-stretch">
           {products?.map(({ id, title, description, thumbnail }) => (
-            <Col md="3" key={id}>
+            <Col lg={3} key={id}>
               <Link
                 to={`${id}`}
                 style={{ textDecoration: "none", color: "inherit" }}

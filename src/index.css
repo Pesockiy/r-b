@@ -19,7 +19,7 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-.b .card {
+/* .b .card {
   overflow: hidden;
   transition: transform .3s;
 }
@@ -27,9 +27,10 @@ code {
   height: 50%;
 }
 img {
+  width: 100%;
   object-fit: cover;
   object-position: center;
-}
+} */
 .b .card:hover {
   transform: scale(1.1);
 }
@@ -85,4 +86,31 @@ html {
 }
 .e {
   background-color: green!important;
+}
+.gallery {
+  overflow: hidden;
+  display: flex;
+  width: 500px;
+  height: 300px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.gallery__slide {
+  flex-shrink: 0;
+  height: 100%;
+}
+.gallery__slide img {
+  width: 100%;
+  height: inherit;
+}
+.b {
+  width: 200px;
+  background-color: red;
+}
+.fd {
+  display: inline-flex;
+}
+h1 {
+  font-size: 10vw;
+  font-family: fantasy;
 }

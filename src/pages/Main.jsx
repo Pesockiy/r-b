@@ -1,71 +1,96 @@
-import {
-  useEffect,
-  useLayoutEffect,
+import React, {
   useState,
-  useRef,
-  useMemo,
+  useEffect,
   useCallback,
-  memo,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  createRef,
+  useTransition,
+  createContext,
 } from "react";
+import { gsap } from "gsap";
 
-import PropTypes from "prop-types";
+import { Button } from "react-bootstrap";
 
-import {
-  Container,
-  Row,
-  Col,
-  Badge,
-  Spinner,
-  Card,
-  Form,
-} from "react-bootstrap";
-
-import Tooltip from "./Tooltip";
-import Button from "../components/Button/Button";
-import WithMemo from "../components/Button/WithMemo";
+// const txt = "Hello ebat!".split("");
+const txt = "Hello Wrld!".split("");
 
 const Main = () => {
-  const [number, setNumber] = useState(0);
+  const btnRef = useRef([]);
 
-  const clickHandler = useCallback(() => setNumber(number + 1), [number]);
-  const clickHandler2 = useCallback(
-    () => console.log("тот самий лишний ререндер"),
-    []
-  );
+  const ar = [];
+
+  for (let i = 0; i < txt.length; i++) {
+    ar.push(
+      <span key={i} ref={(el) => (btnRef.current[i] = el)}>
+        {txt[i]}
+      </span>
+    );
+  }
+
+  useLayoutEffect(() => {
+    for (let i = 0; i < btnRef.current.length; i++) {
+      const h = btnRef.current[btnRef.current.length - 1].clientHeight * .8;
+
+      gsap.to(btnRef.current[i], {
+        color: "rgb(" + (4 * i) / 2 + "," +  i * 1 + "," + (10 * i / 3) / 4+ ")",
+        duration: 0.1 * i,
+        delay: 0,
+      });
+      gsap.to(btnRef.current[i], {
+        x: 100 * `1.${i}`,
+        duration: 0.5,
+        delay: 0.5,
+      });
+      gsap.to(btnRef.current[i], { x: 200, duration: 0.5, delay: 1 });
+      gsap.to(btnRef.current[btnRef.current.length - 1], {
+        y: -h,
+        duration: 0.1,
+        delay: 1,
+      });
+      gsap.to(btnRef.current[btnRef.current.length - 1], {
+        y: 0,
+        duration: 0.35,
+        delay: 1.3,
+      });
+      gsap.to(btnRef.current[i], {
+        x: 0,
+        duration: 0.75,
+        delay: 1.9,
+      });
+      gsap.to(btnRef.current[i], {
+        color: "rgb(" + (10 * i) / 3 + "," + 10 * i + "," + 20 * i + ")",
+        duration: 0.1 * i,
+        delay: 1.9,
+      });
+      // gsap.to(btnRef.current[i], {
+      //   x: 100 * `1.${i}`,
+      //   duration: 0.5,
+      //   delay: 0.5,
+      // });
+      // gsap.to(btnRef.current[i], { x: 200, duration: 0.5, delay: 1.5 });
+      // gsap.to(btnRef.current[btnRef.current.length - 1], {
+      //   y: -20,
+      //   duration: 0.1,
+      //   delay: 1.5,
+      // });
+      // gsap.to(btnRef.current[btnRef.current.length - 1], {
+      //   y: 0,
+      //   duration: 0.25,
+      //   delay: 2.5,
+      // });
+      // gsap.to(btnRef.current[i], {
+      //   x: 0,
+      //   duration: 0.75,
+      //   delay: 2.9,
+      // });
+    }
+  }, []);
 
   return (
     <>
-      <Container>
-        <Row>
-          <Col>
-            <Tooltip
-              buttonText="тултип 1"
-              tooltipText={"єто подсказка очень длиннная"}
-            />
-          </Col>
-          <Col>
-            <Tooltip
-              buttonText="тултип 2"
-              tooltipText={"єто мальенькая "}
-              visible={true}
-            />
-          </Col>
-        </Row>
-        <Row className="py-4">
-          <Col>
-            {/* <WithMemo onClick={clickHandler2} variant="secondary">не должна ререндериться</WithMemo> */}
-            <Button onClick={clickHandler2} variant="secondary">
-              не должна ререндериться
-            </Button>
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <Button onClick={clickHandler}>кнопка,которая все портит</Button>
-            {number}
-          </Col>
-        </Row>
-      </Container>
+      <h1 className="fd">{ar}</h1>
     </>
   );
 };
